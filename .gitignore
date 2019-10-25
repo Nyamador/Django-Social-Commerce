@@ -9,6 +9,11 @@ __pycache__/
 #node modules
 node_modules/
 
+#preventing
+static_build/
+static_root/
+
+
 # Distribution / packaging
 .Python
 build/
