@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #custom apps
+    #3rd party packages
+    'webpack_loader',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
+
+
+#webpack loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+    #if possible create another bundle for admin dashboard(seller center)
+    # ,'DASHBOARD': {
+    #     'BUNDLE_DIR_NAME': 'dashboard_bundles/',
+    #     'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-dashboard.json'),
+    # }
+}
+
+#{% load render_bundle from webpack_loader %}
+#{% render_bundle 'main' %}
+# {% render_bundle 'main' 'js' 'DEFAULT' %}
+#{% render_bundle 'main' 'js' 'DASHBOARD' %}
+
+#image bundles
+#{% load webpack_static from webpack_loader %}
+#<!-- render full public path of logo.png -->
+#<img src="{% webpack_static 'logo.png' %}"/>
