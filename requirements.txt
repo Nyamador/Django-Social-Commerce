@@ -1,0 +1,7 @@
+Django==2.2.6
+django-storages==1.7.2
+django-webpack-loader==0.6.0
+pytz==2019.3
+South==1.0.2
+sqlparse==0.3.0
+whitenoise==4.1.4
