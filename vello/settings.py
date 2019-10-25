@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #custom apps
     #3rd party packages
     'webpack_loader',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
