@@ -9,6 +9,10 @@ __pycache__/
 #node modules
 node_modules/
 
+#static
+static_build/
+static_src/
+
 #preventing
 static_build/
 static_root/

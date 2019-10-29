@@ -1,25 +1,12 @@
 {
   "name": "vello",
   "version": "1.0.0",
-  "description": "Vello",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "desmond",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Nyamador/vello/issues"
-  },
-  "homepage": "https://github.com/Nyamador/vello#readme",
-  "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "babel-loader": "^8.0.6",
-    "webpack": "^4.41.2",
-    "webpack-bundle-tracker": "^0.4.3",
-    "webpack-cli": "^3.3.9"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

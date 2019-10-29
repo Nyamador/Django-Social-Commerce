@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     #custom apps
+    'cart',
     #3rd party packages
     'webpack_loader',
 ]
@@ -135,7 +135,7 @@ STATICFILES_DIRS = (
 #./static_build
  #       ↓
 #  $ ./manage.py collectstatic
-        ↓
+        # ↓
 #./static_root
 
 #Whitenoise
