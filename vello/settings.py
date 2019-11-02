@@ -147,7 +147,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static_src'), #builds from webpack
+    os.path.join(BASE_DIR, 'static_build'), #builds from webpack
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
@@ -219,8 +219,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': os.path.join(BASE_DIR,'static_src', 'static_build/'),
-        'STATS_FILE': os.path.join(BASE_DIR,'static_src','webpack-stats.json'),
+        'BUNDLE_DIR_NAME': os.path.join(BASE_DIR, 'static_build/'),#must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
