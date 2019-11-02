@@ -1,4 +1,6 @@
 <!-- templates/home.html -->
+{% load render_bundle from webpack_loader %}
+{% render_bundle 'main' 'js' 'DEFAULT' %}
 {% load socialaccount %}
 
 <h1>Django Login Mega-Tutorial</h1>
