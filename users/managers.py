@@ -1,11 +1,12 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.db import models
 
+# from . import models
 
 class VelocityUserManager(BaseUserManager):
     """
-    Custom user model manager where email is the unique identifier
-    for authentication instead of username.
+    Custom user model manager 
     """
     def create_user(self, email, password, **extra_fields):
         """
@@ -32,3 +33,14 @@ class VelocityUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
+
+
+# class RelationshipManager(models.Manager):
+#     """
+#     Relationship manager for follow management
+#     """
+#     def get_user_interests(self, user):
+#         """
+#         Returns a queryset of all profiles followed by a user
+#         """
+

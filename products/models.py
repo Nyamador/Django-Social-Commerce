@@ -1,7 +1,21 @@
+from django.conf import settings
 from django.db import models
+from django.shortcuts import reverse
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from users.models import Profile
+
+
+class Gallery(models.Model):
+    name = models.CharField("Gallery name", max_length=200, null=False, blank=False)
+    slug = models.SlugField(max_length=200, null=False, blank=False)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Gallery,self).save( *args, **kwargs)
 
 
 class Category(models.Model):
@@ -10,6 +24,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 
 class Subcategory(models.Model):
     name = models.CharField("Subcategory Name", max_length=100)
@@ -17,6 +35,12 @@ class Subcategory(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Subcategory"
+        verbose_name_plural = "Subcategories"
+
+
 
 # Countries
 country_list = (
@@ -292,6 +316,8 @@ sim_sizes = (
     ('mi', 'Micro Sim'),
 )
 
+
+
 class Product(models.Model):
     name = models.CharField("Product Name", max_length=200,null=False, blank = False)
     slug = models.SlugField(max_length=100, editable=False, null=False, blank=False)
@@ -308,7 +334,7 @@ class Product(models.Model):
     description = models.CharField("description", max_length=500, default="N/A")
     higlights = models.CharField("Highlights", max_length=300, default="N/A")
     #meta
-    sold_by = models.OneToOneField(Profile, on_delete=models.CASCADE,editable=False)
+    sold_by = models.OneToOneField(Profile, on_delete=models.CASCADE)
     date_added = models.DateField(default=timezone.now,editable=False)
     active = models.BooleanField(default=False)
 	# Specifications - For Electronic Devices
@@ -346,23 +372,38 @@ class Product(models.Model):
     pub_year = models.CharField("Publication Year", max_length=4, help_text="Publication Year", default="N/A")
     edition = models.CharField("Edition", max_length=20, help_text="Edition", default="N/A")
 
-
+    #gallery
+    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    main_image = models.ImageField(upload_to="photo_image_filename")
+    image_1 = models.ImageField(upload_to="photo_image_filename")
+    image_2 = models.ImageField(upload_to="photo_image_filename")
+    image_3 = models.ImageField(upload_to="photo_image_filename",null=True, blank="True")
+    image_4 = models.ImageField(upload_to="photo_image_filename",null=True, blank="True")
+    image_5 = models.ImageField(upload_to="photo_image_filename",null=True, blank="True")
+    image_6 = models.ImageField(upload_to="photo_image_filename",null=True, blank="True")
 
     def __str__(self):
         return self.name
 
+    def photo_image_filename(instance, filename):
+        return f'{instance.gallery.slug}/{filename}'
+
+    def get_absolute_url(self):
+        return reverse ('products.views.index', kwargs={'slug':self.slug})
+
     def save(self, *args, **kwargs):
         """
-        Auto populating the SlugField with the product name
+        Auto populating the SlugField with the slug friendly version of the product name
         """
         self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
 
     class Meta:
+        verbose_name = "Product"
         verbose_name_plural = "Products"
 
 
-class Variations(models.Model):
+class Variation(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	# Pricing
 	variation = models.CharField("Variation", max_length=2,choices=country_list, help_text="Variation", blank=True,null=True)
@@ -377,5 +418,22 @@ class Variations(models.Model):
 	def __str__(self):
 		return f'{self.product} - {self.sku}'
 
-	class Meta:
-		verbose_name_plural = "Variations"
+
+rating_count = (
+	('1','1'),
+	('2','2'),
+	('3','3'),
+	('4','4'),
+	('5','5'),
+)
+
+class Review(models.Model):
+	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE)
+	title = models.CharField("Review Title", max_length=50, null=False, blank=False)
+	content = models.CharField("Review Content", max_length=300, null=False, blank=False)
+	rating = models.PositiveIntegerField(choices=rating_count)
+	date_added = models.DateField(default=timezone.now,editable=False)
+
+	def __str__(self):
+		return f'{self.author.name} - {self.title}'

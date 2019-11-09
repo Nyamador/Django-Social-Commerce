@@ -13,6 +13,7 @@ idna==2.8
 model-bakery==1.0.1
 oauthlib==3.1.0
 Pillow==6.2.1
+psycopg2==2.8.4
 pycryptodome==3.9.0
 PyJWT==1.6.4
 python3-openid==3.1.0

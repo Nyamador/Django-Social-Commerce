@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
+    'feed.apps.FeedConfig',
+    'stream.apps.StreamConfig',
+    'orders.apps.OrdersConfig',
     #3rd party packages
     'webpack_loader',
     'allauth',
@@ -100,13 +103,24 @@ WSGI_APPLICATION = 'vello.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'default':{
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'Vello',
+        'USER': 'postgres',
+        'PASSWORD': '24012001',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -151,6 +165,10 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+
+MEDIA_URL = 'media/'
 
 #./static_src
 #        ↓
@@ -240,3 +258,8 @@ WEBPACK_LOADER = {
 #{% load webpack_static from webpack_loader %}
 #<!-- render full public path of logo.png -->
 #<img src="{% webpack_static 'logo.png' %}"/>
+
+
+#===================================MUX API
+MUX_API_ID = '31037393-0c9e-4f3c-a306-a7a819b8bf16'
+MUX_API_SECRET = 'GgBjpbcGMDri14OeIYxBXN2w3FMym2AaCWf33nMnhonKEaHh2ROSyS0II0iK6+CN6C+6rvQFdLH'
